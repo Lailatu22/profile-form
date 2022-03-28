@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
-
+import ProfileForm from './components/ProfileForm'
+import ProfileCard from './components/ProfileCard'
+import useLocalStorage from './useLocalStorage'
 function App() {
+const[profiles, setProfiles ]=useLocalStorage("profiles", [])
+
+const updateProfiles = (profile)=>{
+  let arr =profiles;
+  arr.push(profile);
+  setProfiles([...arr]);
+};
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='app'>
+    <h1>Profile Maker</h1>
+     <div>
+     <ProfileForm submit={updateProfiles}/>
+
+    <hr/>
+    <div className='list'>
+    {profiles.map((person,index)=>(
+      <ProfileCard key={index} card={person}/>
+    ))}
     </div>
-  );
+    </div>
+    </div>
+  )
 }
 
-export default App;
+export default App
